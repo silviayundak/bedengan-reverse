@@ -62,6 +62,23 @@ export default function TabsLayout() {
       />
 
       {/* =========================
+          LOKASI
+      ========================= */}
+      <Tabs.Screen
+        name="lokasi"
+        options={{
+          title: "Lokasi",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "location" : "location-outline"}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      {/* =========================
           RESERVASI
       ========================= */}
       <Tabs.Screen
@@ -71,23 +88,6 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "calendar" : "calendar-outline"}
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* =========================
-          E-TICKET
-      ========================= */}
-      <Tabs.Screen
-        name="eticket"
-        options={{
-          title: "E-Ticket",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? "ticket" : "ticket-outline"}
               size={size}
               color={color}
             />

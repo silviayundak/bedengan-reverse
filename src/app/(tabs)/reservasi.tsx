@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Clipboard from "expo-clipboard";
 
 export default function ReservasiScreen() {
-  const [searchText, setSearchText] = useState("");
+  const [activeTab, setActiveTab] = useState<"tiket" | "scan">("tiket");
 
   return (
     <LinearGradient
@@ -25,7 +26,7 @@ export default function ReservasiScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Top Header Profile Bar */}
+        {/* Top Profile Header Bar */}
         <View style={styles.headerCard}>
           <View style={styles.userInfo}>
             <View style={styles.logoIconBg}>
@@ -33,7 +34,7 @@ export default function ReservasiScreen() {
             </View>
             <View>
               <Text style={styles.greetingSub}>Selamat Pagi,</Text>
-              <Text style={styles.greetingTitle}>Lisa!</Text>
+              <Text style={styles.greetingTitle}>Wahyu!</Text>
             </View>
           </View>
           <View style={styles.headerActions}>
@@ -51,136 +52,124 @@ export default function ReservasiScreen() {
           </View>
         </View>
 
-        {/* Italic Quote */}
-        <Text style={styles.quoteText}>
-          "Jelajahi keindahan alam, rasakan pengalaman tak terlupakan di
-          Bedengan."
-        </Text>
-
-        {/* Stepper Card (Reservasi Camping) */}
-        <View style={styles.stepperCard}>
-          <View style={styles.stepperHeader}>
-            <View style={styles.stepperIconBg}>
-              <Ionicons name="home" size={22} color="#FFFFFF" />
+        {/* E-Ticket Tab Header Card */}
+        <View style={styles.tabCard}>
+          <View style={styles.tabHeaderRow}>
+            <View style={styles.tabIconBg}>
+              <Ionicons name="ticket-outline" size={22} color="#FFFFFF" />
             </View>
             <View style={{ flex: 1, marginLeft: 12 }}>
-              <Text style={styles.stepperTitle}>Reservasi Camping</Text>
-              <Text style={styles.stepperSub}>
-                Pesan tempat camping favoritmu dengan mudah.
+              <Text style={styles.tabHeaderTitle}>E-Ticket & Reservasi</Text>
+              <Text style={styles.tabHeaderSub}>
+                Tiket digital untuk akses cepat ke lokasi.
               </Text>
             </View>
           </View>
 
-          {/* Steps Indicator */}
-          <View style={styles.stepsRow}>
-            {/* Step 1 */}
-            <View style={styles.stepItem}>
-              <View style={[styles.stepCircle, styles.stepCircleActive]}>
-                <Ionicons name="location" size={16} color="#FFFFFF" />
-              </View>
-              <Text style={[styles.stepText, styles.stepTextActive]}>
-                Pilih Lokasi Bedengan
+          {/* Toggle Button Group */}
+          <View style={styles.toggleGroup}>
+            <TouchableOpacity
+              style={[
+                styles.toggleBtn,
+                activeTab === "tiket" && styles.toggleBtnActive,
+              ]}
+              onPress={() => setActiveTab("tiket")}
+              activeOpacity={0.85}
+            >
+              <Ionicons
+                name="ticket"
+                size={16}
+                color={activeTab === "tiket" ? "#FFFFFF" : "#5B7366"}
+              />
+              <Text
+                style={[
+                  styles.toggleText,
+                  activeTab === "tiket" && styles.toggleTextActive,
+                ]}
+              >
+                Tiket Saya
               </Text>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.stepLine} />
+            <TouchableOpacity
+              style={[
+                styles.toggleBtn,
+                activeTab === "scan" && styles.toggleBtnActive,
+              ]}
+              onPress={() => setActiveTab("scan")}
+              activeOpacity={0.85}
+            >
+              <Ionicons
+                name="qr-code-outline"
+                size={16}
+                color={activeTab === "scan" ? "#FFFFFF" : "#5B7366"}
+              />
+              <Text
+                style={[
+                  styles.toggleText,
+                  activeTab === "scan" && styles.toggleTextActive,
+                ]}
+              >
+                Scan QR
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-            {/* Step 2 */}
-            <View style={styles.stepItem}>
-              <View style={styles.stepCircle}>
-                <Text style={styles.stepNumberText}>2</Text>
+        {/* Dynamic Content Based on Tab */}
+        {activeTab === "tiket" ? (
+          <>
+            {/* Section Title & Active Ticket Badge */}
+            <View style={styles.sectionRow}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.sectionTitle}>Daftar Tiket Aktif</Text>
+                <Text style={styles.sectionSub}>
+                  Berikut adalah tiket yang sedang aktif dan dapat digunakan.
+                </Text>
               </View>
-              <Text style={styles.stepText}>Pilih Tanggal & Jumlah</Text>
-            </View>
-
-            <View style={styles.stepLine} />
-
-            {/* Step 3 */}
-            <View style={styles.stepItem}>
-              <View style={styles.stepCircle}>
-                <Text style={styles.stepNumberText}>3</Text>
+              <View style={styles.activeBadge}>
+                <View style={styles.activeDot} />
+                <Text style={styles.activeBadgeText}>2 Tiket Aktif</Text>
               </View>
-              <Text style={styles.stepText}>Konfirmasi & Bayar</Text>
+            </View>
+
+            {/* Card Tiket 1: Area Sungai */}
+            <TicketCardItem
+              title="Area Sungai"
+              date="12 Sep 2026 - 14 Sep 2026"
+              guests="2 Orang"
+              locationCategory="Bedengan Reserve"
+              bookingCode="RSV-20260912-001"
+              imageUri="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80"
+            />
+
+            {/* Card Tiket 2: Bedengan Camping Ground */}
+            <TicketCardItem
+              title="Bedengan Camping Ground"
+              date="20 Sep 2026 - 22 Sep 2026"
+              guests="3 Orang"
+              locationCategory="Bedengan Reserve"
+              bookingCode="RSV-20260920-003"
+              imageUri="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=500&q=80"
+            />
+          </>
+        ) : (
+          /* View Tampilan Scan QR */
+          <View style={styles.scanContainer}>
+            <View style={styles.scanBox}>
+              <Ionicons name="qr-code-outline" size={80} color="#176B3A" />
+              <Text style={styles.scanTitle}>Pindai QR Code Tiket</Text>
+              <Text style={styles.scanDesc}>
+                Arahkan kamera ke QR Code di lokasi atau tunjukkan QR pada tiket
+                Anda kepada petugas.
+              </Text>
+              <TouchableOpacity style={styles.scanButton} activeOpacity={0.8}>
+                <Ionicons name="camera-outline" size={18} color="#FFFFFF" />
+                <Text style={styles.scanButtonText}>Buka Kamera</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </View>
-
-        {/* Proteksi Kuota Banner */}
-        <View style={styles.warningBanner}>
-          <View style={styles.warningIconBg}>
-            <Text style={styles.warningExclamation}>!</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.warningTitle}>Proteksi Kuota</Text>
-            <Text style={styles.warningDesc}>
-              Jika lokasi yang dipilih sudah 100% penuh, form booking akan
-              otomatis terkunci.
-            </Text>
-          </View>
-          <View style={styles.fullBadge}>
-            <Ionicons name="person" size={12} color="#E53935" />
-            <Text style={styles.fullBadgeText}>100% Penuh</Text>
-          </View>
-        </View>
-
-        {/* Section Header */}
-        <View style={styles.sectionHeaderRow}>
-          <View style={styles.sectionIconBg}>
-            <Ionicons name="location" size={18} color="#FFFFFF" />
-          </View>
-          <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={styles.sectionTitle}>1. Pilih Lokasi Bedengan</Text>
-            <Text style={styles.sectionSub}>
-              Pilih area camping yang sesuai dengan kebutuhanmu.
-            </Text>
-          </View>
-        </View>
-
-        {/* Search Bar with Filter Icon */}
-        <View style={styles.searchContainer}>
-          <Ionicons name="search-outline" size={20} color="#789084" />
-          <TextInput
-            placeholder="Cari nama lokasi, fasilitas, atau area..."
-            placeholderTextColor="#8C9E94"
-            style={styles.searchInput}
-            value={searchText}
-            onChangeText={setSearchText}
-          />
-          <TouchableOpacity activeOpacity={0.7}>
-            <Ionicons name="options-outline" size={20} color="#5B7366" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Location Cards (Hanya 2 Lokasi Sesuai Dashboard) */}
-        <LocationCardItem
-          title="Area Sungai"
-          subText="Area sejuk di tepi aliran sungai jernih."
-          location="Bedengan, Malang"
-          status="Tersedia"
-          imageUri="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80"
-        />
-
-        <LocationCardItem
-          title="Bedengan Camping Ground"
-          subText="Area luas, cocok untuk keluarga & komunitas."
-          location="Bedengan, Malang"
-          status="Tersedia"
-          imageUri="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=500&q=80"
-        />
-
-        {/* Kapasitas Tersedia Card Banner */}
-        <TouchableOpacity style={styles.capacityCard} activeOpacity={0.85}>
-          <View style={styles.capacityIconBg}>
-            <Ionicons name="people" size={22} color="#176B3A" />
-          </View>
-          <View style={{ flex: 1, marginLeft: 12 }}>
-            <Text style={styles.capacityTitle}>Kapasitas Tersedia</Text>
-            <Text style={styles.capacityDesc}>
-              Pilih lokasi untuk melihat detail kapasitas dan tanggal tersedia.
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color="#839B8E" />
-        </TouchableOpacity>
+        )}
 
         <View style={{ height: 20 }} />
       </ScrollView>
@@ -188,63 +177,108 @@ export default function ReservasiScreen() {
   );
 }
 
-// Sub Component Card Lokasi
-function LocationCardItem({
+// Sub Component Card Tiket
+function TicketCardItem({
   title,
-  subText,
-  location,
-  status,
+  date,
+  guests,
+  locationCategory,
+  bookingCode,
   imageUri,
 }: {
   title: string;
-  subText: string;
-  location: string;
-  status: string;
+  date: string;
+  guests: string;
+  locationCategory: string;
+  bookingCode: string;
   imageUri: string;
 }) {
-  return (
-    <TouchableOpacity style={styles.card} activeOpacity={0.88}>
-      {/* Thumbnail Area dengan Tag */}
-      <View style={styles.cardImageWrapper}>
-        <Image source={{ uri: imageUri }} style={styles.cardImage} />
-        <View style={styles.cardTagOverlay}>
-          <Ionicons name="leaf" size={10} color="#FFFFFF" />
-          <Text style={styles.cardTagText}>Camping Ground</Text>
-        </View>
-      </View>
+  const handleCopyCode = async (code: string) => {
+    await Clipboard.setStringAsync(code);
+    Alert.alert("Berhasil", `Kode booking ${code} telah disalin!`);
+  };
 
-      {/* Info Lokasi */}
-      <View style={styles.cardContent}>
-        <View style={styles.cardHeaderRow}>
-          <Text style={styles.cardTitle} numberOfLines={1}>
-            {title}
-          </Text>
-          <View style={styles.statusBadge}>
-            <View style={styles.statusDot} />
-            <Text style={styles.statusText}>{status}</Text>
+  return (
+    <View style={styles.ticketCard}>
+      {/* Top Info Card */}
+      <View style={styles.ticketMainRow}>
+        <View style={styles.cardImageWrapper}>
+          <Image source={{ uri: imageUri }} style={styles.cardImage} />
+          <View style={styles.cardTagOverlay}>
+            <Ionicons name="leaf" size={9} color="#FFFFFF" />
+            <Text style={styles.cardTagText}>Camping Ground</Text>
           </View>
         </View>
 
-        <View style={styles.infoRow}>
-          <Ionicons name="calendar-outline" size={13} color="#84968C" />
-          <Text style={styles.infoText} numberOfLines={1}>
-            {subText}
+        <View style={styles.ticketMainInfo}>
+          <View style={styles.ticketHeaderRow}>
+            <Text style={styles.ticketTitle} numberOfLines={1}>
+              {title}
+            </Text>
+            <View style={styles.statusBadge}>
+              <View style={styles.statusDot} />
+              <Text style={styles.statusText}>Aktif</Text>
+            </View>
+          </View>
+
+          <View style={styles.infoRow}>
+            <Ionicons name="calendar-outline" size={13} color="#788C82" />
+            <Text style={styles.infoText}>{date}</Text>
+          </View>
+
+          <View style={styles.infoRow}>
+            <Ionicons name="people-outline" size={13} color="#788C82" />
+            <Text style={styles.infoText}>{guests}</Text>
+          </View>
+
+          <View style={styles.infoRow}>
+            <Ionicons name="location-outline" size={13} color="#788C82" />
+            <Text style={styles.infoText}>{locationCategory}</Text>
+          </View>
+        </View>
+
+        <Ionicons
+          name="chevron-forward"
+          size={18}
+          color="#A3B4AB"
+          style={styles.arrowIcon}
+        />
+      </View>
+
+      {/* Booking Code Box */}
+      <View style={styles.bookingCodeBox}>
+        <View>
+          <Text style={styles.bookingCodeLabel}>KODE BOOKING</Text>
+          <Text style={styles.bookingCodeValue}>{bookingCode}</Text>
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.copyBtn}
+          onPress={() => handleCopyCode(bookingCode)}
+        >
+          <Ionicons name="copy-outline" size={18} color="#176B3A" />
+        </TouchableOpacity>
+      </View>
+
+      {/* QR Ticket Action Container */}
+      <View style={styles.qrActionContainer}>
+        <View style={styles.qrPreviewWrapper}>
+          <Ionicons name="qr-code" size={36} color="#183328" />
+        </View>
+        <View style={{ flex: 1, marginLeft: 12 }}>
+          <Text style={styles.qrActionTitle}>Tiket Masuk</Text>
+          <Text style={styles.qrActionDesc}>
+            Tunjukkan QR Code ini kepada petugas saat kedatangan dan kepulangan.
           </Text>
         </View>
 
-        <View style={styles.infoRow}>
-          <Ionicons name="location-outline" size={13} color="#84968C" />
-          <Text style={styles.infoText}>{location}</Text>
-        </View>
+        <TouchableOpacity style={styles.detailBtn} activeOpacity={0.8}>
+          <Ionicons name="receipt-outline" size={14} color="#183328" />
+          <Text style={styles.detailBtnText}>Lihat Detail</Text>
+          <Ionicons name="chevron-forward" size={12} color="#183328" />
+        </TouchableOpacity>
       </View>
-
-      <Ionicons
-        name="chevron-forward"
-        size={18}
-        color="#A3B4AB"
-        style={styles.arrowIcon}
-      />
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -270,6 +304,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.04,
     shadowRadius: 8,
+    marginBottom: 16,
   },
   userInfo: {
     flexDirection: "row",
@@ -317,34 +352,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#E53935",
   },
 
-  // Quote
-  quoteText: {
-    fontSize: 11,
-    fontStyle: "italic",
-    color: "#5B7065",
-    marginTop: 14,
-    marginBottom: 16,
-    textAlign: "left",
-    paddingHorizontal: 4,
-  },
-
-  // Stepper Card
-  stepperCard: {
+  // Tab Header Card
+  tabCard: {
     backgroundColor: "#FFFFFF",
     borderRadius: 22,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 20,
     elevation: 3,
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 10,
   },
-  stepperHeader: {
+  tabHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
   },
-  stepperIconBg: {
+  tabIconBg: {
     width: 42,
     height: 42,
     borderRadius: 14,
@@ -352,127 +376,50 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  stepperTitle: {
+  tabHeaderTitle: {
     fontSize: 16,
     fontWeight: "800",
     color: "#183328",
   },
-  stepperSub: {
+  tabHeaderSub: {
     fontSize: 11,
     color: "#788C82",
     marginTop: 2,
   },
-  stepsRow: {
+  toggleGroup: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: "#F0F5F2",
-  },
-  stepItem: {
-    alignItems: "center",
-    flex: 1,
-  },
-  stepCircle: {
-    width: 32,
-    height: 32,
+    backgroundColor: "#F2F7F4",
     borderRadius: 16,
-    backgroundColor: "#E2ECE6",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 6,
-  },
-  stepCircleActive: {
-    backgroundColor: "#176B3A",
-  },
-  stepNumberText: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#677D72",
-  },
-  stepText: {
-    fontSize: 9,
-    color: "#83968C",
-    textAlign: "center",
-    fontWeight: "600",
-    lineHeight: 12,
-  },
-  stepTextActive: {
-    color: "#176B3A",
-    fontWeight: "800",
-  },
-  stepLine: {
-    height: 1,
-    backgroundColor: "#DCE7E0",
-    flex: 0.5,
-    marginTop: 16,
-  },
-
-  // Warning Banner
-  warningBanner: {
-    backgroundColor: "#FFF8EC",
-    borderRadius: 18,
-    padding: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFE2B8",
-    marginBottom: 20,
-    gap: 10,
-  },
-  warningIconBg: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "#F59E0B",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  warningExclamation: {
-    color: "#FFFFFF",
-    fontWeight: "900",
-    fontSize: 16,
-  },
-  warningTitle: {
-    fontSize: 12,
-    fontWeight: "800",
-    color: "#854D0E",
-  },
-  warningDesc: {
-    fontSize: 10,
-    color: "#A16207",
-    marginTop: 1,
-    lineHeight: 13,
-  },
-  fullBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FEE2E2",
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    borderRadius: 12,
+    padding: 4,
     gap: 4,
   },
-  fullBadgeText: {
-    fontSize: 9,
-    fontWeight: "800",
-    color: "#DC2626",
-  },
-
-  // Section Title
-  sectionHeaderRow: {
+  toggleBtn: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 14,
-  },
-  sectionIconBg: {
-    width: 30,
-    height: 30,
-    borderRadius: 10,
-    backgroundColor: "#176B3A",
     justifyContent: "center",
+    paddingVertical: 10,
+    borderRadius: 12,
+    gap: 6,
+  },
+  toggleBtnActive: {
+    backgroundColor: "#176B3A",
+  },
+  toggleText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#5B7366",
+  },
+  toggleTextActive: {
+    color: "#FFFFFF",
+  },
+
+  // Section Row
+  sectionRow: {
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 16,
@@ -480,47 +427,51 @@ const styles = StyleSheet.create({
     color: "#183328",
   },
   sectionSub: {
-    fontSize: 11,
+    fontSize: 10,
     color: "#788C82",
+    marginTop: 2,
   },
-
-  // Search Bar
-  searchContainer: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 18,
-    height: 48,
+  activeBadge: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 14,
+    backgroundColor: "#DCFCE7",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 14,
+    gap: 5,
+  },
+  activeDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#16A34A",
+  },
+  activeBadgeText: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#15803D",
+  },
+
+  // Ticket Card
+  ticketCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 22,
+    padding: 14,
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#E2ECE6",
-    elevation: 1,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
   },
-  searchInput: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 12,
-    color: "#183328",
-  },
-
-  // Location Cards
-  card: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    padding: 10,
-    marginBottom: 12,
+  ticketMainRow: {
     flexDirection: "row",
     alignItems: "center",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
+    marginBottom: 12,
   },
   cardImageWrapper: {
-    width: 95,
+    width: 85,
     height: 85,
-    borderRadius: 15,
+    borderRadius: 16,
     overflow: "hidden",
     position: "relative",
   },
@@ -530,33 +481,32 @@ const styles = StyleSheet.create({
   },
   cardTagOverlay: {
     position: "absolute",
-    bottom: 5,
-    left: 5,
+    bottom: 4,
+    left: 4,
     backgroundColor: "rgba(23, 107, 58, 0.88)",
-    paddingHorizontal: 6,
+    paddingHorizontal: 5,
     paddingVertical: 2,
-    borderRadius: 6,
+    borderRadius: 5,
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 2,
   },
   cardTagText: {
     color: "#FFFFFF",
-    fontSize: 8,
+    fontSize: 7,
     fontWeight: "700",
   },
-  cardContent: {
+  ticketMainInfo: {
     flex: 1,
     marginLeft: 12,
-    paddingRight: 4,
   },
-  cardHeaderRow: {
+  ticketHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 4,
   },
-  cardTitle: {
+  ticketTitle: {
     fontSize: 14,
     fontWeight: "800",
     color: "#183328",
@@ -566,15 +516,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#DCFCE7",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 10,
-    gap: 4,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+    gap: 3,
   },
   statusDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 3,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
     backgroundColor: "#16A34A",
   },
   statusText: {
@@ -590,42 +540,130 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 10,
-    color: "#72857B",
-    flex: 1,
+    color: "#6B7E74",
   },
   arrowIcon: {
     marginLeft: 4,
   },
 
-  // Capacity Card
-  capacityCard: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    padding: 14,
+  // Booking Code Box
+  bookingCodeBox: {
+    backgroundColor: "#EEF7F2",
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 6,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
+    justifyContent: "space-between",
+    marginBottom: 12,
   },
-  capacityIconBg: {
-    width: 40,
-    height: 40,
-    borderRadius: 14,
-    backgroundColor: "#E8F5ED",
-    justifyContent: "center",
-    alignItems: "center",
+  bookingCodeLabel: {
+    fontSize: 8,
+    fontWeight: "800",
+    color: "#607D6F",
+    letterSpacing: 0.5,
   },
-  capacityTitle: {
+  bookingCodeValue: {
     fontSize: 13,
     fontWeight: "800",
     color: "#183328",
+    marginTop: 1,
   },
-  capacityDesc: {
-    fontSize: 10,
+  copyBtn: {
+    padding: 4,
+  },
+
+  // QR Action Box
+  qrActionContainer: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E2ECE6",
+    borderStyle: "dashed",
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FAFCFA",
+  },
+  qrPreviewWrapper: {
+    width: 48,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#E2ECE6",
+  },
+  qrActionTitle: {
+    fontSize: 12,
+    fontWeight: "800",
+    color: "#183328",
+  },
+  qrActionDesc: {
+    fontSize: 9,
     color: "#788C82",
     marginTop: 1,
+    lineHeight: 12,
+  },
+  detailBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#E2ECE6",
+    gap: 3,
+  },
+  detailBtnText: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#183328",
+  },
+
+  // Scan View Section
+  scanContainer: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 22,
+    padding: 24,
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+  },
+  scanBox: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  scanTitle: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#183328",
+    marginTop: 16,
+  },
+  scanDesc: {
+    fontSize: 12,
+    color: "#788C82",
+    textAlign: "center",
+    marginTop: 8,
+    lineHeight: 18,
+    paddingHorizontal: 12,
+  },
+  scanButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#176B3A",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 14,
+    marginTop: 20,
+    gap: 8,
+  },
+  scanButtonText: {
+    color: "#FFFFFF",
+    fontSize: 13,
+    fontWeight: "700",
   },
 });
