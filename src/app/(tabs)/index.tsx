@@ -8,801 +8,1226 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+
+// =============================================================
+// IMAGE DASHBOARD
+// Lokasi:
+// assets/images/bedengan-dashboard.jpg
+//
+// File ini berada di:
+// src/app/(tabs)/index.tsx
+//
+// Jadi path yang benar:
+// ../../../assets/images/bedengan-dashboard.jpg
+// =============================================================
+
+const dashboardImage = require("../../../assets/images/bedengan-dashboard.jpg");
 
 export default function DashboardScreen() {
   return (
-    <View style={{ flex: 1 }}>
-      {/* Soft Mint Gradient Background */}
-      <LinearGradient
-        colors={["#E2EFE0", "#EEF6F0", "#E1EFE4"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.container}
+    <View style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
       >
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainer}
-        >
-          {/* Top Profile / Header Card */}
-          <View style={styles.topHeaderCard}>
-            <View style={styles.greetingContainer}>
-              <View style={styles.avatarBox}>
-                <Ionicons name="tree" size={22} color="#FFFFFF" />
-                <View style={styles.activeCheckBadge}>
-                  <Ionicons name="checkmark" size={8} color="#FFFFFF" />
-                </View>
-              </View>
-              <View>
-                <Text style={styles.welcomeTitle}>Selamat Pagi, Lisaa! 👋</Text>
-                <Text style={styles.welcomeSubText}>
-                  Nikmati keindahan alam, mulai{"\n"}petualanganmu di Bedengan.
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.headerActions}>
-              <TouchableOpacity style={styles.circleBtn} activeOpacity={0.8}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={18}
-                  color="#1C352D"
-                />
-                <View style={styles.notifBadge} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.avatarCircle} activeOpacity={0.8}>
-                <View style={styles.innerAvatarCircle} />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Weather & Elevation Widget */}
-          <View style={styles.weatherCard}>
-            <View style={styles.weatherMain}>
-              <View style={styles.sunIconBox}>
-                <Ionicons
-                  name="cloudy-night-outline"
-                  size={30}
-                  color="#D97706"
-                />
-              </View>
-              <View>
-                <View
-                  style={{ flexDirection: "row", alignItems: "flex-start" }}
-                >
-                  <Text style={styles.tempText}>24</Text>
-                  <Text style={styles.tempDegree}>° C</Text>
-                </View>
-                <Text style={styles.weatherStatus}>Cerah Berawan</Text>
-                <View style={styles.locationRow}>
-                  <Ionicons name="location-sharp" size={11} color="#6B7C73" />
-                  <Text style={styles.locationText}>Bedengan, Malang</Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.weatherDivider} />
-
-            <View style={styles.weatherDetails}>
-              <View style={styles.weatherDetailRow}>
-                <View style={styles.smallIconCircle}>
-                  <MaterialCommunityIcons
-                    name="image-filter-hdr"
-                    size={14}
-                    color="#4A5D54"
-                  />
-                </View>
-                <View>
-                  <Text style={styles.detailLabel}>KETINGGIAN</Text>
-                  <Text style={styles.detailValue}>1.250 mdpl</Text>
-                </View>
-              </View>
-
-              <View style={styles.weatherDetailRow}>
-                <View style={styles.smallIconCircle}>
-                  <Ionicons
-                    name="thermometer-outline"
-                    size={14}
-                    color="#4A5D54"
-                  />
-                </View>
-                <View>
-                  <Text style={styles.detailLabel}>RENTANG SUHU</Text>
-                  <Text style={styles.detailValue}>18° – 26° C</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* Quick Action Grid */}
-          <View style={styles.actionGrid}>
-            <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-              <View style={styles.actionIconBox}>
-                <Ionicons name="ticket-outline" size={24} color="#FFFFFF" />
-              </View>
-              <Text style={styles.actionTitle}>Pesan Tiket</Text>
-              <Text style={styles.actionSubtitle}>Masuk Kawasan</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-              <View style={styles.actionIconBox}>
-                <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
-              </View>
-              <Text style={styles.actionTitle}>Pesan Camping</Text>
-              <Text style={styles.actionSubtitle}>Pilih Area & Tgl</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-              <View style={styles.actionIconBox}>
-                <Ionicons name="map-outline" size={24} color="#FFFFFF" />
-              </View>
-              <Text style={styles.actionTitle}>Lihat Peta</Text>
-              <Text style={styles.actionSubtitle}>Jelajahi Lokasi</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-              <View style={styles.actionIconBox}>
-                <Ionicons
-                  name="document-text-outline"
-                  size={24}
-                  color="#FFFFFF"
-                />
-              </View>
-              <Text style={styles.actionTitle}>Informasi</Text>
-              <Text style={styles.actionSubtitle}>Fasilitas & Aturan</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Banner Promo / Highlight */}
-          <View style={styles.heroBanner}>
-            <ImageBackground
-              source={{
-                uri: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
-              }}
-              style={styles.heroBgImage}
-              imageStyle={{ borderRadius: 20 }}
+        {/* =====================================================
+            HERO SECTION
+        ===================================================== */}
+        <View style={styles.heroContainer}>
+          <ImageBackground
+            source={dashboardImage}
+            style={styles.heroBackground}
+            imageStyle={styles.heroImage}
+          >
+            <LinearGradient
+              colors={[
+                "rgba(10, 45, 32, 0.08)",
+                "rgba(10, 45, 32, 0.42)",
+                "rgba(7, 35, 26, 0.92)",
+              ]}
+              locations={[0, 0.48, 1]}
+              style={styles.heroOverlay}
             >
-              <LinearGradient
-                colors={["rgba(10,25,18,0.75)", "rgba(10,25,18,0.95)"]}
-                style={styles.heroOverlay}
-              >
-                <View style={styles.heroTag}>
-                  <Ionicons name="leaf" size={10} color="#10B981" />
-                  <Text style={styles.heroTagText}>
-                    BUMI PERKEMAHAN BEDENGAN
-                  </Text>
-                </View>
+              {/* =================================================
+                  HEADER
+              ================================================= */}
+              <View style={styles.header}>
+                {/* LOGO */}
+                <View style={styles.logoContainer}>
+                  <View style={styles.logoIcon}>
+                    <Ionicons name="triangle" size={18} color="#FFFFFF" />
+                  </View>
 
-                <Text style={styles.heroTitle}>
-                  Rasakan Pengalaman Camping yang Berbeda
-                </Text>
-                <Text style={styles.heroSubtitle}>
-                  Tidur di bawah rimbun pohon pinus purba dengan gemericik
-                  sungai jernih dan udara pegunungan alami.
-                </Text>
+                  <View>
+                    <Text style={styles.logoTitle}>Bedengan</Text>
 
-                <View style={styles.heroFooter}>
-                  <TouchableOpacity style={styles.heroBtn} activeOpacity={0.8}>
-                    <Text style={styles.heroBtnText}>Lihat Detail</Text>
-                    <Ionicons name="arrow-forward" size={14} color="#142E23" />
-                  </TouchableOpacity>
-
-                  <View style={styles.pillTag}>
-                    <Text style={styles.pillTagText}>
-                      100% Alam | 100% Seru
-                    </Text>
+                    <Text style={styles.logoSubtitle}>RESERVE</Text>
                   </View>
                 </View>
-              </LinearGradient>
-            </ImageBackground>
-          </View>
 
-          {/* Camping Ground Section */}
-          <View style={styles.sectionHeader}>
-            <View style={styles.sectionTitleRow}>
-              <View style={styles.smallGreenBadge}>
-                <Ionicons name="leaf" size={12} color="#FFFFFF" />
+                {/* HEADER ACTION */}
+                <View style={styles.headerRight}>
+                  <TouchableOpacity
+                    style={styles.headerIcon}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons
+                      name="notifications-outline"
+                      size={20}
+                      color="#FFFFFF"
+                    />
+
+                    <View style={styles.notificationDot} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.profileButton}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons name="person-outline" size={17} color="#FFFFFF" />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View>
-                <Text style={styles.sectionMainTitle}>Camping Ground</Text>
-                <Text style={styles.sectionSubTitle}>
-                  Pilih area favoritmu untuk berkemah
+
+              {/* =================================================
+                  HERO TEXT
+              ================================================= */}
+              <View style={styles.heroContent}>
+                <Text style={styles.heroWelcome}>Selamat Datang di</Text>
+
+                <Text style={styles.heroTitle}>Bedengan Reserve</Text>
+
+                <Text style={styles.heroDescription}>
+                  Nikmati pengalaman berkemah yang nyaman{"\n"}
+                  dengan pemandangan alam yang menakjubkan.
                 </Text>
               </View>
+            </LinearGradient>
+          </ImageBackground>
+        </View>
+
+        {/* =====================================================
+            SEARCH / RESERVATION CARD
+        ===================================================== */}
+        <View style={styles.searchWrapper}>
+          <View style={styles.searchCard}>
+            {/* LOKASI */}
+            <TouchableOpacity style={styles.searchItem} activeOpacity={0.7}>
+              <View style={styles.searchIconBox}>
+                <Ionicons name="location-outline" size={18} color="#356B54" />
+              </View>
+
+              <View style={styles.searchTextContainer}>
+                <Text style={styles.searchLabel}>Lokasi</Text>
+
+                <Text style={styles.searchValue}>Pilih lokasi</Text>
+              </View>
+
+              <Ionicons name="chevron-down" size={16} color="#87968F" />
+            </TouchableOpacity>
+
+            <View style={styles.searchDivider} />
+
+            {/* CHECK IN */}
+            <TouchableOpacity style={styles.searchItem} activeOpacity={0.7}>
+              <View style={styles.searchIconBox}>
+                <Ionicons name="calendar-outline" size={18} color="#356B54" />
+              </View>
+
+              <View style={styles.searchTextContainer}>
+                <Text style={styles.searchLabel}>Check In</Text>
+
+                <Text style={styles.searchValue}>Pilih tanggal</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View style={styles.searchDivider} />
+
+            {/* CHECK OUT */}
+            <TouchableOpacity style={styles.searchItem} activeOpacity={0.7}>
+              <View style={styles.searchIconBox}>
+                <Ionicons name="calendar-outline" size={18} color="#356B54" />
+              </View>
+
+              <View style={styles.searchTextContainer}>
+                <Text style={styles.searchLabel}>Check Out</Text>
+
+                <Text style={styles.searchValue}>Pilih tanggal</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View style={styles.searchDivider} />
+
+            {/* JUMLAH PENGUNJUNG */}
+            <TouchableOpacity style={styles.searchItem} activeOpacity={0.7}>
+              <View style={styles.searchIconBox}>
+                <Ionicons name="people-outline" size={18} color="#356B54" />
+              </View>
+
+              <View style={styles.searchTextContainer}>
+                <Text style={styles.searchLabel}>Jumlah Pengunjung</Text>
+
+                <Text style={styles.searchValue}>1 orang</Text>
+              </View>
+            </TouchableOpacity>
+
+            {/* BUTTON CARI */}
+            <TouchableOpacity style={styles.searchButton} activeOpacity={0.85}>
+              <Text style={styles.searchButtonText}>Cari Sekarang</Text>
+
+              <Ionicons name="arrow-forward" size={17} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* =====================================================
+            LOKASI BEDENGAN
+        ===================================================== */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <View style={styles.sectionHeaderText}>
+              <Text style={styles.sectionTitle}>Lokasi Bedengan</Text>
+
+              <Text style={styles.sectionSubtitle}>
+                Pilih lokasi favoritmu dan rasakan pengalaman{"\n"}
+                berkemah yang berbeda.
+              </Text>
             </View>
-            <TouchableOpacity style={styles.seeAllBtn}>
+
+            <TouchableOpacity style={styles.seeAllButton} activeOpacity={0.7}>
               <Text style={styles.seeAllText}>Lihat Semua</Text>
-              <Ionicons name="chevron-forward" size={14} color="#3F7558" />
+
+              <Ionicons name="chevron-forward" size={14} color="#356B54" />
             </TouchableOpacity>
           </View>
 
-          {/* Horizontal Camping Cards */}
+          {/* =================================================
+              LOCATION CARDS
+          ================================================= */}
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.horizontalList}
+            contentContainerStyle={styles.locationList}
           >
-            {/* Card 1 */}
-            <View style={styles.campingCard}>
-              <View style={styles.cardImageContainer}>
-                <Image
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&q=80",
-                  }}
-                  style={styles.cardImage}
-                />
-                <View style={styles.availableBadge}>
-                  <View style={styles.greenDot} />
-                  <Text style={styles.availableText}>Tersedia</Text>
+            {/* =================================================
+                BEDENGAN A
+            ================================================= */}
+            <TouchableOpacity style={styles.locationCard} activeOpacity={0.9}>
+              <View style={styles.locationImageWrapper}>
+                <Image source={dashboardImage} style={styles.locationImage} />
+
+                <View style={styles.locationBadge}>
+                  <View style={styles.badgeDot} />
+
+                  <Text style={styles.badgeText}>Tersedia</Text>
                 </View>
-                <TouchableOpacity style={styles.favBtn}>
-                  <Ionicons name="heart" size={14} color="#EF4444" />
+
+                <TouchableOpacity
+                  style={styles.favoriteButton}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="heart-outline" size={17} color="#FFFFFF" />
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.cardBody}>
-                <Text style={styles.cardTitle}>Pinus Utama</Text>
-                <View style={styles.locationInfoRow}>
-                  <Ionicons name="location-outline" size={12} color="#84958C" />
-                  <Text style={styles.cardLocation}>Zona Lembah Rindang</Text>
-                </View>
-                <View style={styles.capacityRow}>
-                  <Ionicons name="people-outline" size={12} color="#84958C" />
-                  <Text style={styles.cardCapacity}>Kapasitas 50 orang</Text>
+              <View style={styles.locationBody}>
+                <Text style={styles.locationName} numberOfLines={1}>
+                  Bedengan A
+                </Text>
+
+                <View style={styles.locationInfo}>
+                  <Ionicons name="leaf-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>Area camping asri</Text>
                 </View>
 
-                <View style={styles.cardFooter}>
+                <View style={styles.locationInfo}>
+                  <Ionicons name="people-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>
+                    Kapasitas 20 orang
+                  </Text>
+                </View>
+
+                <View style={styles.locationFooter}>
                   <View>
-                    <Text style={styles.pricePrefix}>Mulai dari</Text>
-                    <Text style={styles.priceText}>
-                      Rp 25.000 <Text style={styles.priceUnit}>/ malam</Text>
-                    </Text>
+                    <Text style={styles.locationPrice}>Rp 25.000</Text>
+
+                    <Text style={styles.locationPriceUnit}>/ malam</Text>
                   </View>
-                  <TouchableOpacity style={styles.circleArrowBtn}>
-                    <Ionicons name="arrow-forward" size={14} color="#FFFFFF" />
+
+                  <TouchableOpacity
+                    style={styles.arrowButton}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons name="arrow-forward" size={15} color="#FFFFFF" />
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
 
-            {/* Card 2 */}
-            <View style={styles.campingCard}>
-              <View style={styles.cardImageContainer}>
-                <Image
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=600&q=80",
-                  }}
-                  style={styles.cardImage}
-                />
-                <View style={styles.availableBadge}>
-                  <View style={styles.greenDot} />
-                  <Text style={styles.availableText}>Tersedia</Text>
+            {/* =================================================
+                BEDENGAN B
+            ================================================= */}
+            <TouchableOpacity style={styles.locationCard} activeOpacity={0.9}>
+              <View style={styles.locationImageWrapper}>
+                <Image source={dashboardImage} style={styles.locationImage} />
+
+                <View style={styles.locationBadge}>
+                  <View style={styles.badgeDot} />
+
+                  <Text style={styles.badgeText}>Tersedia</Text>
                 </View>
+
+                <TouchableOpacity
+                  style={styles.favoriteButton}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="heart-outline" size={17} color="#FFFFFF" />
+                </TouchableOpacity>
               </View>
 
-              <View style={styles.cardBody}>
-                <Text style={styles.cardTitle}>Lembah Hijau</Text>
-                <View style={styles.locationInfoRow}>
-                  <Ionicons name="location-outline" size={12} color="#84958C" />
-                  <Text style={styles.cardLocation}>Zona Bantaran Sungai</Text>
-                </View>
-                <View style={styles.capacityRow}>
-                  <Ionicons name="people-outline" size={12} color="#84958C" />
-                  <Text style={styles.cardCapacity}>Kapasitas 35 orang</Text>
+              <View style={styles.locationBody}>
+                <Text style={styles.locationName} numberOfLines={1}>
+                  Bedengan B
+                </Text>
+
+                <View style={styles.locationInfo}>
+                  <Ionicons name="leaf-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>
+                    Area camping utama
+                  </Text>
                 </View>
 
-                <View style={styles.cardFooter}>
+                <View style={styles.locationInfo}>
+                  <Ionicons name="people-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>
+                    Kapasitas 20 orang
+                  </Text>
+                </View>
+
+                <View style={styles.locationFooter}>
                   <View>
-                    <Text style={styles.pricePrefix}>Mulai dari</Text>
-                    <Text style={styles.priceText}>
-                      Rp 30.000 <Text style={styles.priceUnit}>/ malam</Text>
-                    </Text>
+                    <Text style={styles.locationPrice}>Rp 25.000</Text>
+
+                    <Text style={styles.locationPriceUnit}>/ malam</Text>
                   </View>
+
+                  <TouchableOpacity
+                    style={styles.arrowButton}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons name="arrow-forward" size={15} color="#FFFFFF" />
+                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
+
+            {/* =================================================
+                BEDENGAN C
+            ================================================= */}
+            <TouchableOpacity style={styles.locationCard} activeOpacity={0.9}>
+              <View style={styles.locationImageWrapper}>
+                <Image source={dashboardImage} style={styles.locationImage} />
+
+                <View style={styles.locationBadge}>
+                  <View style={styles.badgeDot} />
+
+                  <Text style={styles.badgeText}>Tersedia</Text>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.favoriteButton}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="heart-outline" size={17} color="#FFFFFF" />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.locationBody}>
+                <Text style={styles.locationName} numberOfLines={1}>
+                  Bedengan C
+                </Text>
+
+                <View style={styles.locationInfo}>
+                  <Ionicons name="leaf-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>Pemandangan alam</Text>
+                </View>
+
+                <View style={styles.locationInfo}>
+                  <Ionicons name="people-outline" size={14} color="#72837B" />
+
+                  <Text style={styles.locationInfoText}>
+                    Kapasitas 15 orang
+                  </Text>
+                </View>
+
+                <View style={styles.locationFooter}>
+                  <View>
+                    <Text style={styles.locationPrice}>Rp 20.000</Text>
+
+                    <Text style={styles.locationPriceUnit}>/ malam</Text>
+                  </View>
+
+                  <TouchableOpacity
+                    style={styles.arrowButton}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons name="arrow-forward" size={15} color="#FFFFFF" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </TouchableOpacity>
           </ScrollView>
+        </View>
 
-          <View style={{ height: 80 }} />
-        </ScrollView>
-      </LinearGradient>
+        {/* =====================================================
+            FEATURE SECTION
+        ===================================================== */}
+        <View style={styles.featureContainer}>
+          {/* FEATURE 1 */}
+          <View style={styles.featureItem}>
+            <View style={styles.featureIcon}>
+              <Ionicons name="leaf-outline" size={23} color="#356B54" />
+            </View>
 
-     
+            <View style={styles.featureText}>
+              <Text style={styles.featureTitle}>Alam Asri</Text>
+
+              <Text style={styles.featureDescription}>
+                Udara sejuk & pemandangan indah
+              </Text>
+            </View>
+          </View>
+
+          {/* FEATURE 2 */}
+          <View style={styles.featureItem}>
+            <View style={styles.featureIcon}>
+              <Ionicons name="home-outline" size={23} color="#356B54" />
+            </View>
+
+            <View style={styles.featureText}>
+              <Text style={styles.featureTitle}>Fasilitas Lengkap</Text>
+
+              <Text style={styles.featureDescription}>
+                Toilet, mushola, warung, dan lainnya
+              </Text>
+            </View>
+          </View>
+
+          {/* FEATURE 3 */}
+          <View style={styles.featureItem}>
+            <View style={styles.featureIcon}>
+              <Ionicons
+                name="shield-checkmark-outline"
+                size={23}
+                color="#356B54"
+              />
+            </View>
+
+            <View style={styles.featureText}>
+              <Text style={styles.featureTitle}>Keamanan 24 Jam</Text>
+
+              <Text style={styles.featureDescription}>
+                Tim keamanan selalu siaga
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* =====================================================
+            WHY CHOOSE US
+        ===================================================== */}
+        <View style={styles.whySection}>
+          <View style={styles.centerSectionHeader}>
+            <Text style={styles.whyTitle}>
+              Kenapa Memilih{"\n"}
+              <Text style={styles.whyTitleGreen}>Bedengan Reserve?</Text>
+            </Text>
+
+            <Text style={styles.whySubtitle}>
+              Kami berkomitmen memberikan pengalaman terbaik{"\n"}
+              untuk setiap pengunjung.
+            </Text>
+          </View>
+
+          {/* WHY GRID */}
+          <View style={styles.whyGrid}>
+            {/* ITEM 1 */}
+            <View style={styles.whyCard}>
+              <View style={styles.whyIcon}>
+                <Ionicons name="calendar-outline" size={22} color="#356B54" />
+              </View>
+
+              <Text style={styles.whyCardTitle}>Proses Mudah</Text>
+
+              <Text style={styles.whyCardDescription}>
+                Reservasi online{"\n"}
+                cepat & praktis
+              </Text>
+            </View>
+
+            {/* ITEM 2 */}
+            <View style={styles.whyCard}>
+              <View style={styles.whyIcon}>
+                <Ionicons name="location-outline" size={22} color="#356B54" />
+              </View>
+
+              <Text style={styles.whyCardTitle}>Lokasi Strategis</Text>
+
+              <Text style={styles.whyCardDescription}>
+                Mudah diakses{"\n"}
+                dari pusat kota
+              </Text>
+            </View>
+
+            {/* ITEM 3 */}
+            <View style={styles.whyCard}>
+              <View style={styles.whyIcon}>
+                <Ionicons name="pricetag-outline" size={22} color="#356B54" />
+              </View>
+
+              <Text style={styles.whyCardTitle}>Harga Terjangkau</Text>
+
+              <Text style={styles.whyCardDescription}>
+                Fasilitas lengkap{"\n"}
+                dengan harga terbaik
+              </Text>
+            </View>
+
+            {/* ITEM 4 */}
+            <View style={styles.whyCard}>
+              <View style={styles.whyIcon}>
+                <Ionicons name="people-outline" size={22} color="#356B54" />
+              </View>
+
+              <Text style={styles.whyCardTitle}>Pelayanan Ramah</Text>
+
+              <Text style={styles.whyCardDescription}>
+                Tim kami siap{"\n"}
+                membantu Anda
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* =====================================================
+            CTA RESERVASI
+        ===================================================== */}
+        <View style={styles.ctaContainer}>
+          <ImageBackground
+            source={dashboardImage}
+            style={styles.ctaBackground}
+            imageStyle={styles.ctaImage}
+          >
+            <LinearGradient
+              colors={["rgba(13, 50, 37, 0.38)", "rgba(7, 37, 27, 0.94)"]}
+              style={styles.ctaOverlay}
+            >
+              <Text style={styles.ctaTitle}>
+                Siap untuk Petualangan{"\n"}
+                Berikutnya?
+              </Text>
+
+              <Text style={styles.ctaDescription}>
+                Pesan sekarang dan rasakan pengalaman{"\n"}
+                berkemah yang tak terlupakan bersama{"\n"}
+                Bedengan Reserve.
+              </Text>
+
+              <TouchableOpacity style={styles.ctaButton} activeOpacity={0.85}>
+                <Text style={styles.ctaButtonText}>Lakukan Reservasi</Text>
+
+                <Ionicons name="arrow-forward" size={17} color="#FFFFFF" />
+              </TouchableOpacity>
+            </LinearGradient>
+          </ImageBackground>
+        </View>
+
+        {/* =====================================================
+            FOOTER
+        ===================================================== */}
+        <View style={styles.footer}>
+          <View style={styles.footerLogo}>
+            <View style={styles.footerLogoIcon}>
+              <Ionicons name="triangle" size={15} color="#FFFFFF" />
+            </View>
+
+            <View>
+              <Text style={styles.footerLogoText}>Bedengan Reserve</Text>
+
+              <Text style={styles.footerSmallText}>
+                Smart Camping & Tourism Reservation
+              </Text>
+            </View>
+          </View>
+
+          <Text style={styles.footerCopyright}>© 2026 Bedengan Reserve</Text>
+        </View>
+
+        <View style={{ height: 40 }} />
+      </ScrollView>
     </View>
   );
 }
 
+/* =============================================================
+   STYLES
+============================================================= */
+
 const styles = StyleSheet.create({
+  /* ===========================================================
+     CONTAINER
+  =========================================================== */
+
   container: {
     flex: 1,
+    backgroundColor: "#F2F7F3",
   },
-  contentContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 50,
+
+  scrollContent: {
     paddingBottom: 20,
   },
 
-  // Header Card
-  topHeaderCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    borderRadius: 24,
-    padding: 14,
+  /* ===========================================================
+     HERO
+  =========================================================== */
+
+  heroContainer: {
+    width: "100%",
+    height: 390,
+    overflow: "hidden",
+  },
+
+  heroBackground: {
+    width: "100%",
+    height: "100%",
+  },
+
+  heroImage: {
+    resizeMode: "cover",
+  },
+
+  heroOverlay: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 48,
+    paddingBottom: 55,
+    justifyContent: "space-between",
+  },
+
+  /* ===========================================================
+     HEADER
+  =========================================================== */
+
+  header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 14,
   },
-  greetingContainer: {
+
+  logoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
   },
-  avatarBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: "#1D3B2E",
+
+  logoIcon: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.7)",
     justifyContent: "center",
     alignItems: "center",
-    position: "relative",
+    marginRight: 8,
   },
-  activeCheckBadge: {
-    position: "absolute",
-    bottom: -2,
-    right: -2,
-    backgroundColor: "#10B981",
-    borderRadius: 8,
-    width: 14,
-    height: 14,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1.5,
-    borderColor: "#FFFFFF",
-  },
-  welcomeTitle: {
-    fontSize: 15,
+
+  logoTitle: {
+    fontSize: 13,
     fontWeight: "800",
-    color: "#142E23",
+    color: "#FFFFFF",
   },
-  welcomeSubText: {
-    fontSize: 10.5,
-    color: "#6B7C73",
+
+  logoSubtitle: {
+    fontSize: 7,
+    color: "#DDEBE3",
+    letterSpacing: 1.2,
     marginTop: 1,
-    lineHeight: 14,
   },
-  headerActions: {
+
+  headerRight: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
   },
-  circleBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: "#F0F6F2",
+
+  headerIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: "rgba(255,255,255,0.14)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.22)",
     justifyContent: "center",
     alignItems: "center",
-    position: "relative",
   },
-  notifBadge: {
+
+  notificationDot: {
     position: "absolute",
     top: 8,
     right: 8,
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: "#EF4444",
+    backgroundColor: "#E95C48",
   },
-  avatarCircle: {
+
+  profileButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: "#27533F",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.25)",
+  },
+
+  /* ===========================================================
+     HERO CONTENT
+  =========================================================== */
+
+  heroContent: {
+    marginBottom: 15,
+  },
+
+  heroWelcome: {
+    color: "#BBDAC9",
+    fontSize: 13,
+    fontWeight: "600",
+    marginBottom: 4,
+  },
+
+  heroTitle: {
+    color: "#FFFFFF",
+    fontSize: 32,
+    lineHeight: 38,
+    fontWeight: "900",
+    letterSpacing: -0.7,
+  },
+
+  heroDescription: {
+    color: "#F1F6F3",
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
+  },
+
+  /* ===========================================================
+     SEARCH
+  =========================================================== */
+
+  searchWrapper: {
+    paddingHorizontal: 16,
+    marginTop: -48,
+    zIndex: 10,
+  },
+
+  searchCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 13,
+
+    shadowColor: "#173C2B",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.14,
+    shadowRadius: 15,
+
+    elevation: 7,
+  },
+
+  searchItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    minHeight: 48,
+  },
+
+  searchIconBox: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: "#1D3B2E",
+    borderRadius: 11,
+    backgroundColor: "#EDF5F0",
     justifyContent: "center",
     alignItems: "center",
-  },
-  innerAvatarCircle: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    borderWidth: 2,
-    borderColor: "#A7F3D0",
+    marginRight: 10,
   },
 
-  // Weather Card
-  weatherCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.75)",
-    borderRadius: 22,
-    padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  weatherMain: {
-    flex: 1.2,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  sunIconBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: "#FEF3C7",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  tempText: {
-    fontSize: 26,
-    fontWeight: "800",
-    color: "#142E23",
-  },
-  tempDegree: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#142E23",
-    marginTop: 2,
-    marginLeft: 2,
-  },
-  weatherStatus: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#142E23",
-  },
-  locationRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 3,
-    marginTop: 2,
-  },
-  locationText: {
-    fontSize: 10,
-    color: "#6B7C73",
-  },
-  weatherDivider: {
-    width: 1,
-    height: "80%",
-    backgroundColor: "#D1E2D7",
-    marginHorizontal: 12,
-  },
-  weatherDetails: {
+  searchTextContainer: {
     flex: 1,
-    gap: 10,
-  },
-  weatherDetailRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  smallIconCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "#E2F0E7",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  detailLabel: {
-    fontSize: 8.5,
-    fontWeight: "800",
-    color: "#84958C",
-    letterSpacing: 0.5,
-  },
-  detailValue: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: "#142E23",
   },
 
-  // Action Grid
-  actionGrid: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  actionCard: {
-    width: "23%",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    paddingVertical: 14,
-    paddingHorizontal: 4,
-    alignItems: "center",
-    elevation: 1,
-    shadowColor: "#000",
-    shadowOpacity: 0.03,
-    shadowRadius: 5,
-  },
-  actionIconBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: "#3A6251",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  actionTitle: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: "#142E23",
-    textAlign: "center",
-  },
-  actionSubtitle: {
-    fontSize: 8.5,
-    color: "#84958C",
-    textAlign: "center",
-    marginTop: 2,
-  },
-
-  // Hero Banner
-  heroBanner: {
-    borderRadius: 20,
-    overflow: "hidden",
-    marginBottom: 20,
-  },
-  heroBgImage: {
-    width: "100%",
-  },
-  heroOverlay: {
-    padding: 18,
-  },
-  heroTag: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    alignSelf: "flex-start",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginBottom: 10,
-  },
-  heroTagText: {
+  searchLabel: {
     fontSize: 9,
-    fontWeight: "800",
-    color: "#FFFFFF",
-    letterSpacing: 0.5,
-  },
-  heroTitle: {
-    fontSize: 18,
-    fontWeight: "800",
-    color: "#FFFFFF",
-    marginBottom: 6,
-    lineHeight: 22,
-  },
-  heroSubtitle: {
-    fontSize: 10.5,
-    color: "#D1E2D7",
-    lineHeight: 15,
-    marginBottom: 16,
-  },
-  heroFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  heroBtn: {
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  heroBtnText: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: "#142E23",
-  },
-  pillTag: {
-    backgroundColor: "rgba(255, 255, 255, 0.12)",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.2)",
-  },
-  pillTagText: {
-    fontSize: 9.5,
-    color: "#FFFFFF",
+    color: "#899790",
     fontWeight: "600",
+    marginBottom: 2,
   },
 
-  // Section Header
-  sectionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 12,
+  searchValue: {
+    fontSize: 12,
+    color: "#213A2F",
+    fontWeight: "700",
   },
-  sectionTitleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+
+  searchDivider: {
+    height: 1,
+    backgroundColor: "#EDF1EE",
+    marginVertical: 5,
   },
-  smallGreenBadge: {
-    width: 24,
-    height: 24,
-    borderRadius: 8,
-    backgroundColor: "#3A6251",
+
+  searchButton: {
+    marginTop: 10,
+    height: 45,
+    borderRadius: 13,
+    backgroundColor: "#285E48",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  sectionMainTitle: {
-    fontSize: 15,
-    fontWeight: "800",
-    color: "#142E23",
-  },
-  sectionSubTitle: {
-    fontSize: 10,
-    color: "#6B7C73",
-  },
-  seeAllBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  seeAllText: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#3F7558",
+    gap: 7,
   },
 
-  // Camping Horizontal Cards
-  horizontalList: {
-    gap: 12,
-  },
-  campingCard: {
-    width: 210,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    padding: 8,
-  },
-  cardImageContainer: {
-    height: 120,
-    borderRadius: 14,
-    overflow: "hidden",
-    position: "relative",
-  },
-  cardImage: {
-    width: "100%",
-    height: "100%",
-  },
-  availableBadge: {
-    position: "absolute",
-    top: 8,
-    left: 8,
-    backgroundColor: "rgba(16, 185, 129, 0.9)",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  greenDot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: "#FFFFFF",
-  },
-  availableText: {
-    fontSize: 8.5,
-    fontWeight: "700",
+  searchButtonText: {
     color: "#FFFFFF",
-  },
-  favBtn: {
-    position: "absolute",
-    top: 8,
-    right: 8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cardBody: {
-    padding: 6,
-  },
-  cardTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "800",
-    color: "#142E23",
-    marginTop: 2,
   },
-  locationInfoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    marginTop: 3,
+
+  /* ===========================================================
+     SECTION
+  =========================================================== */
+
+  section: {
+    marginTop: 28,
   },
-  cardLocation: {
-    fontSize: 9.5,
-    color: "#84958C",
-  },
-  capacityRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    marginTop: 2,
-  },
-  cardCapacity: {
-    fontSize: 9.5,
-    color: "#84958C",
-  },
-  cardFooter: {
+
+  sectionHeader: {
+    paddingHorizontal: 18,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
-    marginTop: 10,
+    marginBottom: 15,
   },
-  pricePrefix: {
-    fontSize: 8.5,
-    color: "#84958C",
+
+  sectionHeaderText: {
+    flex: 1,
   },
-  priceText: {
-    fontSize: 12,
+
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#16392A",
+  },
+
+  sectionSubtitle: {
+    fontSize: 10,
+    lineHeight: 15,
+    color: "#7A8C83",
+    marginTop: 4,
+  },
+
+  seeAllButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    paddingBottom: 2,
+    marginLeft: 8,
+  },
+
+  seeAllText: {
+    color: "#356B54",
+    fontSize: 10,
     fontWeight: "800",
-    color: "#142E23",
   },
-  priceUnit: {
-    fontSize: 9,
-    fontWeight: "400",
-    color: "#84958C",
+
+  /* ===========================================================
+     LOCATION LIST
+  =========================================================== */
+
+  locationList: {
+    paddingHorizontal: 18,
+    gap: 12,
   },
-  circleArrowBtn: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: "#3A6251",
+
+  /* ===========================================================
+     LOCATION CARD
+  =========================================================== */
+
+  locationCard: {
+    width: 220,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 17,
+    overflow: "hidden",
+
+    shadowColor: "#244838",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
+
+    elevation: 3,
+  },
+
+  locationImageWrapper: {
+    height: 132,
+    position: "relative",
+  },
+
+  locationImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+
+  locationBadge: {
+    position: "absolute",
+    left: 9,
+    top: 9,
+    backgroundColor: "rgba(42, 105, 76, 0.93)",
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+
+  badgeDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: "#B7F3D2",
+  },
+
+  badgeText: {
+    color: "#FFFFFF",
+    fontSize: 8,
+    fontWeight: "700",
+  },
+
+  favoriteButton: {
+    position: "absolute",
+    top: 9,
+    right: 9,
+    width: 29,
+    height: 29,
+    borderRadius: 15,
+    backgroundColor: "rgba(20,40,31,0.45)",
     justifyContent: "center",
     alignItems: "center",
   },
 
-  // Bottom Navigation
-  bottomNavContainer: {
-    position: "absolute",
-    bottom: 16,
-    left: 16,
-    right: 16,
+  locationBody: {
+    padding: 12,
+  },
+
+  locationName: {
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: "900",
+    color: "#18392B",
+    marginBottom: 7,
+  },
+
+  locationInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginBottom: 4,
+  },
+
+  locationInfoText: {
+    flex: 1,
+    fontSize: 9.5,
+    color: "#7B8C84",
+  },
+
+  locationFooter: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    marginTop: 9,
+  },
+
+  locationPrice: {
+    fontSize: 12,
+    color: "#18392B",
+    fontWeight: "900",
+  },
+
+  locationPriceUnit: {
+    fontSize: 8.5,
+    color: "#899790",
+    marginTop: 1,
+  },
+
+  arrowButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#285E48",
+    justifyContent: "center",
     alignItems: "center",
   },
-  bottomNav: {
+
+  /* ===========================================================
+     FEATURE
+  =========================================================== */
+
+  featureContainer: {
+    marginHorizontal: 18,
+    marginTop: 25,
+    backgroundColor: "#E5F0E9",
+    borderRadius: 18,
+    padding: 13,
+    gap: 12,
+  },
+
+  featureItem: {
     flexDirection: "row",
+    alignItems: "center",
+  },
+
+  featureIcon: {
+    width: 45,
+    height: 45,
+    borderRadius: 23,
     backgroundColor: "#FFFFFF",
-    borderRadius: 30,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    width: "100%",
-    justifyContent: "space-around",
-    elevation: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-  },
-  navItem: {
+    justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 20,
+    marginRight: 10,
   },
-  navItemActive: {
-    backgroundColor: "#3A6251",
+
+  featureText: {
+    flex: 1,
+  },
+
+  featureTitle: {
+    color: "#1C4231",
+    fontSize: 11,
+    fontWeight: "900",
+    marginBottom: 2,
+  },
+
+  featureDescription: {
+    color: "#7B8C83",
+    fontSize: 8.5,
+    lineHeight: 12,
+  },
+
+  /* ===========================================================
+     WHY SECTION
+  =========================================================== */
+
+  whySection: {
+    marginTop: 34,
+    paddingHorizontal: 18,
+  },
+
+  centerSectionHeader: {
+    alignItems: "center",
+  },
+
+  whyTitle: {
+    textAlign: "center",
+    color: "#183A2B",
+    fontSize: 22,
+    lineHeight: 27,
+    fontWeight: "900",
+  },
+
+  whyTitleGreen: {
+    color: "#356B54",
+  },
+
+  whySubtitle: {
+    textAlign: "center",
+    color: "#7A8C83",
+    fontSize: 9.5,
+    lineHeight: 14,
+    marginTop: 7,
+  },
+
+  /* ===========================================================
+     WHY GRID
+  =========================================================== */
+
+  whyGrid: {
     flexDirection: "row",
-    gap: 6,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginTop: 18,
+    gap: 10,
   },
-  navText: {
-    fontSize: 9,
-    color: "#788B81",
+
+  whyCard: {
+    width: "48%",
+    minHeight: 145,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 15,
+    alignItems: "center",
+    justifyContent: "center",
+
+    shadowColor: "#214333",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 7,
+
+    elevation: 2,
+  },
+
+  whyIcon: {
+    width: 45,
+    height: 45,
+    borderRadius: 23,
+    backgroundColor: "#EAF3ED",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
+  whyCardTitle: {
+    color: "#1D3D2E",
+    fontSize: 11,
+    fontWeight: "900",
+    textAlign: "center",
+  },
+
+  whyCardDescription: {
+    color: "#829189",
+    fontSize: 8.5,
+    lineHeight: 13,
+    textAlign: "center",
+    marginTop: 5,
+  },
+
+  /* ===========================================================
+     CTA
+  =========================================================== */
+
+  ctaContainer: {
+    marginHorizontal: 18,
+    marginTop: 30,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+
+  ctaBackground: {
+    width: "100%",
+    minHeight: 260,
+  },
+
+  ctaImage: {
+    resizeMode: "cover",
+  },
+
+  ctaOverlay: {
+    flex: 1,
+    minHeight: 260,
+    padding: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  ctaTitle: {
+    color: "#FFFFFF",
+    fontSize: 22,
+    lineHeight: 28,
+    fontWeight: "900",
+    textAlign: "center",
+  },
+
+  ctaDescription: {
+    color: "#DDEBE3",
+    fontSize: 9.5,
+    lineHeight: 15,
+    textAlign: "center",
+    marginTop: 9,
+  },
+
+  ctaButton: {
+    backgroundColor: "#2E7959",
+    borderRadius: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+    marginTop: 17,
+  },
+
+  ctaButtonText: {
+    color: "#FFFFFF",
+    fontSize: 10.5,
+    fontWeight: "800",
+  },
+
+  /* ===========================================================
+     FOOTER
+  =========================================================== */
+
+  footer: {
+    marginHorizontal: 18,
+    marginTop: 25,
+    paddingTop: 18,
+    borderTopWidth: 1,
+    borderTopColor: "#D9E5DD",
+  },
+
+  footerLogo: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  footerLogoIcon: {
+    width: 31,
+    height: 31,
+    borderRadius: 9,
+    backgroundColor: "#285E48",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 8,
+  },
+
+  footerLogoText: {
+    color: "#214434",
+    fontSize: 11,
+    fontWeight: "900",
+  },
+
+  footerSmallText: {
+    color: "#8A9991",
+    fontSize: 7.5,
     marginTop: 2,
   },
-  navTextActive: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#FFFFFF",
+
+  footerCopyright: {
+    color: "#9AA69F",
+    fontSize: 8,
+    marginTop: 14,
+    textAlign: "center",
   },
 });
